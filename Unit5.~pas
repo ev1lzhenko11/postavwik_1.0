@@ -1,0 +1,71 @@
+unit Unit5;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, DB, IBCustomDataSet, IBTable, IBQuery;
+
+type
+  TForm5 = class(TForm)
+    Label3: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label5: TLabel;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    Button1: TButton;
+    Button2: TButton;
+    IBQuery1: TIBQuery;
+    procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form5: TForm5;
+
+implementation
+
+uses Unit4, Unit1;
+
+{$R *.dfm}
+
+procedure TForm5.Button2Click(Sender: TObject);
+begin
+Form5.Close;
+end;
+
+procedure TForm5.Button1Click(Sender: TObject);
+begin
+Ibquery1.SQL.Text:='update fizicheskoe_lico set fio='''+Edit1.Text+''',pasportnie_dannie='''+Edit2.Text+''',adres='''+Edit3.Text+''',telephone='''+edit4.text+''' where fizicheskoe_lico_id='+Ibquery1.FieldByname('fizicheskoe_lico_id').asstring;
+Showmessage(Ibquery1.SQL.Text);
+ibquery1.open;
+ibquery1.close;
+Form4.Close;
+Form1.ComboBox1.OnChange(Form1.ComboBox1);
+end;
+
+procedure TForm5.FormShow(Sender: TObject);
+begin
+begin
+Form1.DBGrid1.OnDblClick(Form1.DBGrid1);
+IBquery1.sql.text:='select *from fizicheskoe_lico where fizicheskoe_lico_id='+Form1.IBquery1.FieldByname('fizicheskoe_lico_id').AsString;
+IBquery1.open;
+Edit1.Text:=Form1.IBQuery1.Fieldbyname('fio').asstring;
+Edit2.Text:=Form1.IBQuery1.Fieldbyname('pasportnie_dannie').asstring;
+Edit3.Text:=Form1.IBQuery1.Fieldbyname('adres').asstring;
+Edit4.Text:=Form1.IBQuery1.Fieldbyname('telephone').asstring;
+IBquery1.close;
+IBquery1.open;
+Form1.DBGrid1.OnDblClick(Form1.DBGrid1);
+end;
+end;
+
+end.
